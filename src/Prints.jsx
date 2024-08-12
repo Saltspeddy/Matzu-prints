@@ -1,8 +1,10 @@
 export default function Prints() {
   return (
-    <div className="w-full mt-28 align-middle min-h-screen">
+    <div className="w-full mt-28 flex justify-center min-h-screen">
       {" "}
-      Here you can see some awsome prints made here at Matzu{" "}
+      <h1 className="text-6xl">
+        Here you can see some awsome prints made here at Matzu
+      </h1>
     </div>
   );
 }

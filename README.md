@@ -1,8 +1,5 @@
-# React + Vite
+# Matzu prints
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Matzu Prints, where innovation meets precision. We specialize in creating high-quality, on-demand 3D-printed parts tailored to your unique specifications. Whether you're an individual maker, a professional engineer, or a business seeking custom components, Matzu Prints is your trusted partner in bringing your concepts to life.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+May it be an action figurine, a custom 3d printed sign or a special part hard to find in hardware stores, we are here to help! Our goal is to make your dreams come to life.
