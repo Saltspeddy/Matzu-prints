@@ -1,4 +1,53 @@
+import { useRef, useEffect } from "react";
+
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { STLLoader } from "three-stdlib";
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+
+const orbit = new OrbitControls(camera, renderer.domElement);
+
+const axesHelper = new THREE.AxesHelper(5);
+scene.add(axesHelper);
+camera.position.set(0, 50, 50);
+orbit.update();
+
+try {
+  const loader = new STLLoader();
+  loader.load("src/assets/cerc.stl", function (geometry) {
+    const material = new THREE.MeshNormalMaterial();
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    mesh.position.set(0, 0, 0);
+    mesh.rotation.set(0, 0, 0);
+    mesh.scale.set(1, 1, 1);
+  });
+} catch (error) {
+  console.error("An error occurred while loading the STL file:", error);
+}
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
 export default function Home() {
+  const mountRef = useRef(null);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
   return (
     <div>
       <div className="h-screen w-screen absolute top-0 left-0 bg-white opacity-30 z-10">
@@ -17,15 +66,7 @@ export default function Home() {
         </div>
         <div className="min-h-[40vh] w-[35vw] bg-white rounded-3xl text-black p-8">
           <h1>Drop here your file and we will print them for you!</h1>
-          <div
-            id="drop_zone"
-            ondrop="dropHandler(event);"
-            ondragover="dragOverHandler(event);"
-          >
-            <p>
-              Drag one or more files to this <i>drop zone</i>.
-            </p>
-          </div>
+          <div ref={mountRef} className="w-full h-[20rem]"></div>
         </div>
       </div>
     </div>
