@@ -1,15 +1,14 @@
+//"Parallelepipod - 3D printer"
 import { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { STLLoader } from "three-stdlib";
+import { GLTFLoader } from "three-stdlib";
 
-export default function STLbox({ modelUrl }) {
+export default function GLTF3dmode() {
   const mountRef = useRef(null);
   const mountedRef = useRef(true);
-  let boolean = true;
   useEffect(() => {
     // Renderer
-    console.log(modelUrl);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
       mountRef.current.clientWidth,
@@ -40,20 +39,19 @@ export default function STLbox({ modelUrl }) {
     const axesHelper = new THREE.AxesHelper(5);
     scene.add(axesHelper);
 
-    // STLLoader
-    if (modelUrl) {
-      const loader = new STLLoader();
-      loader.parse(modelUrl, (geometry) => {
-        const material = new THREE.MeshNormalMaterial();
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
+    // GLTFLoader
+    const loader = new GLTFLoader();
+    loader.load("src/assets/scene.gltf", (geometry) => {
+      const material = new THREE.MeshNormalMaterial();
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
 
-        // Set the position, rotation, and scale of the mesh
-        mesh.position.set(0, 0, 0);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(1, 1, 1);
-      });
-    }
+      // Set the position, rotation, and scale of the mesh
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(0, 0, 0);
+      mesh.scale.set(1, 1, 1);
+    });
+
     // Resize handling
     const handleResize = () => {
       renderer.setSize(
@@ -88,7 +86,7 @@ export default function STLbox({ modelUrl }) {
         mountRef.current.removeChild(renderer.domElement);
       }
     };
-  }, [modelUrl]);
+  }, []);
 
   return <div className="w-full h-[20rem] rounded-2xl" ref={mountRef}></div>;
 }

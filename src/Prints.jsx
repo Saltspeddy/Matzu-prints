@@ -1,13 +1,13 @@
 export default function Prints() {
   return (
-    <div className="w-full mt-28 flex flex-col justify-center items-center">
+    <div className="bg-[#011627] w-full mt-24 text-[#FDFFFC] flex flex-col justify-center items-center">
       {" "}
       <h1 className="text-6xl font-roboto">
         Here you can see some awsome prints made here at Matzu!
       </h1>
       <div className="w-screen p-10 grid grid-cols-4 gap-12 justify-center">
-        <div className=" flex flex-col gap-4 w-[25rem]  bg-white border-[#06D6A0] rounded-2xl border-8 p-4">
-          <h1 className="w-full border-b-2 border-black font-lobster font-medium">
+        <div className="flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
+          <h1 className="w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
           <div
@@ -19,8 +19,8 @@ export default function Prints() {
           ></div>
           <h2>3d printed figurine of groot</h2>
         </div>{" "}
-        <div className=" flex flex-col gap-4 w-[25rem] bg-white border-[#06D6A0] rounded-2xl border-8 p-4">
-          <h1 className="w-full border-b-2 border-black font-lobster font-medium">
+        <div className=" flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
+          <h1 className="w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
           <div
@@ -32,8 +32,8 @@ export default function Prints() {
           ></div>
           <h2>Case for micro sd cards having 8 slots</h2>
         </div>{" "}
-        <div className=" flex flex-col gap-4 w-[25rem] bg-white border-[#06D6A0] rounded-2xl border-8 p-4">
-          <h1 className=" w-full border-b-2 border-black font-lobster font-medium">
+        <div className=" flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
+          <h1 className=" w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
           <div
@@ -45,8 +45,8 @@ export default function Prints() {
           ></div>
           <h2>adittional description of the image</h2>
         </div>{" "}
-        <div className=" flex flex-col gap-4 w-[25rem] bg-white border-[#06D6A0] rounded-2xl border-8 p-4">
-          <h1 className="w-full border-b-2 border-black font-lobster font-medium">
+        <div className=" flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
+          <h1 className="w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
           <div
@@ -58,8 +58,8 @@ export default function Prints() {
           ></div>
           <h2>3dprinted Yoda</h2>
         </div>
-        <div className=" flex flex-col gap-4 w-[25rem]   bg-white border-[#06D6A0] rounded-2xl border-8 p-4">
-          <h1 className="w-full border-b-2 border-black font-lobster font-medium">
+        <div className=" flex flex-col gap-4 w-[25rem]   border-[#FF7D00] rounded-2xl border-8 p-4">
+          <h1 className="w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
           <div
