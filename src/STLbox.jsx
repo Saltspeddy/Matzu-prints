@@ -5,11 +5,10 @@ import { STLLoader } from "three-stdlib";
 
 export default function STLbox({ modelUrl }) {
   const mountRef = useRef(null);
-  const mountedRef = useRef(true);
-  let boolean = true;
   useEffect(() => {
+    if (!modelUrl) return; // Ensure there's a modelUrl before continuing
+
     // Renderer
-    console.log(modelUrl);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
       mountRef.current.clientWidth,
@@ -32,8 +31,8 @@ export default function STLbox({ modelUrl }) {
 
     // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // Damping for smoother controls
-    controls.dampingFactor = 0.25; // Adjust damping speed
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
     controls.enableZoom = true;
 
     // AxesHelper
@@ -41,19 +40,17 @@ export default function STLbox({ modelUrl }) {
     scene.add(axesHelper);
 
     // STLLoader
-    if (modelUrl) {
-      const loader = new STLLoader();
-      loader.parse(modelUrl, (geometry) => {
-        const material = new THREE.MeshNormalMaterial();
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        // Set the position, rotation, and scale of the mesh
-        mesh.position.set(0, 0, 0);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(1, 1, 1);
-      });
+    const loader = new STLLoader();
+    if (modelUrl instanceof ArrayBuffer) {
+      // Using loader.parse when modelUrl is an ArrayBuffer (from uploaded file)
+      const geometry = loader.parse(modelUrl);
+      const material = new THREE.MeshNormalMaterial();
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+    } else {
+      console.error("Expected ArrayBuffer, but got:", typeof modelUrl);
     }
+
     // Resize handling
     const handleResize = () => {
       renderer.setSize(
@@ -69,18 +66,69 @@ export default function STLbox({ modelUrl }) {
     // Animation Loop
     const animate = () => {
       requestAnimationFrame(animate);
-
-      // Update OrbitControls
       controls.update();
-
-      // Render the scene
       renderer.render(scene, camera);
     };
     animate();
 
+    function calculateVolume() {
+      let totalVolume = 0;
+      const geometry = loader.parse(modelUrl);
+      geometry.computeVertexNormals();
+      const positions = geometry.attributes.position.array;
+
+      for (let i = 0; i < positions.length; i += 9) {
+        const v0 = new THREE.Vector3(
+          positions[i],
+          positions[i + 1],
+          positions[i + 2]
+        );
+        const v1 = new THREE.Vector3(
+          positions[i + 3],
+          positions[i + 4],
+          positions[i + 5]
+        );
+
+        const v2 = new THREE.Vector3(
+          positions[i + 6],
+          positions[i + 7],
+          positions[i + 8]
+        );
+
+        const volume = v0.dot(v1.cross(v2)) / 6;
+        totalVolume += volume;
+      }
+      totalVolume = Math.round(Math.abs(totalVolume));
+      console.log(totalVolume);
+      return totalVolume;
+    }
+
+    function estimateFilamentUsage(
+      volumeInCubicMM,
+      filamentDiameter = 1.75,
+      filamentDensity = 1.25
+    ) {
+      volumeInCubicMM = calculateVolume();
+      // Volume of filament (cylinder) per millimeter
+      const radius = filamentDiameter / 2;
+      const crossSectionArea = Math.PI * Math.pow(radius, 2); // Area in square mm
+
+      // Convert volume to grams using the density of the filament
+      const volumeInCubicCM = volumeInCubicMM / 1000; // Convert cubic mm to cubic cm
+      const weightInGrams = volumeInCubicCM * filamentDensity; // Weight in grams
+
+      // Calculate filament length in mm
+      const filamentLength = volumeInCubicMM / crossSectionArea; // Length in mm
+      console.log(weightInGrams.toFixed(2));
+      console.log(filamentLength.toFixed(2));
+      return {
+        weightInGrams: weightInGrams.toFixed(2), // Filament weight in grams
+        lengthInMM: filamentLength.toFixed(2), // Filament length in millimeters
+      };
+    }
+    estimateFilamentUsage();
     // Cleanup on component unmount
     return () => {
-      mountedRef.current = false; // Mark as unmounted
       window.removeEventListener("resize", handleResize);
       controls.dispose();
       renderer.dispose();
@@ -88,7 +136,7 @@ export default function STLbox({ modelUrl }) {
         mountRef.current.removeChild(renderer.domElement);
       }
     };
-  }, [modelUrl]);
+  }, [modelUrl]); // Effect runs whenever modelUrl changes
 
   return <div className="w-full h-[20rem] rounded-2xl" ref={mountRef}></div>;
 }

@@ -1,19 +1,38 @@
 import { useRef, useEffect, useState } from "react";
 import STLbox from "./STLbox";
 import GLTF3dmode from "./GLTF3dmode";
+
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
-  const changeModelUrl = () => {
-    setInputValue(event.target.files[0]);
-    console.log(event.target.files[0]);
-    console.log("src/assets/cerc.stl");
+  const [inputValue, setInputValue] = useState(null);
+
+  const changeModelUrl = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          // The result will be an ArrayBuffer
+          const arrayBuffer = e.target.result;
+          // Set inputValue to the ArrayBuffer
+          setInputValue(arrayBuffer);
+          console.log("ArrayBuffer created successfully:", arrayBuffer);
+        } catch (error) {
+          console.error("Failed to process the ArrayBuffer:", error);
+        }
+      };
+
+      reader.onerror = () => {
+        console.error("Error reading file:", reader.error);
+      };
+
+      reader.readAsArrayBuffer(file); // Convert the file to ArrayBuffer
+    }
   };
-  useEffect(() => {});
+
   return (
     <div>
-      <div className="h-screen w-screen absolute top-0 left-0 bg-[#011627] opacity-90 z-10">
-        {" "}
-      </div>
+      <div className="h-screen w-screen absolute top-0 left-0 bg-[#011627] opacity-90 z-10"></div>
       <div
         className="z-40 h-screen w-screen flex justify-between p-24 items-center bg-center bg-cover bg-no-repeat overflow-hidden"
         style={{
@@ -21,8 +40,7 @@ export default function Home() {
             'url("https://filamatrix.com/wp-content/uploads/2021/11/Filamatrix-117794-3D-Printing-Filaments-blogbanner1.jpg")',
         }}
       >
-        <div className="z-40 min-h-[40vh] text-[#FDFFFC] w-[35vw] border-b-4 border-l-4 border-[#FF7D00] rounded-xl p-8 text-8xl ">
-          {" "}
+        <div className="z-40 min-h-[40vh] text-[#FDFFFC] w-[35vw] border-b-4 border-l-4 border-[#FF7D00] rounded-xl p-8 text-8xl">
           Let go of your Imagination and start printing!
         </div>
         <div className="z-40 min-h-[40vh] w-[35vw] bg-[#FF7D00] rounded-3xl text-black p-8">
