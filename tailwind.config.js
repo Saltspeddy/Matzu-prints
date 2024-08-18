@@ -7,7 +7,8 @@ export default {
   theme: {
     fontFamily: {
       'roboto': ['"Roboto"', 'sans-serif'],
-      'lobster': [ '"Lobster"', 'sans-serif']
+      'lobster': [ '"Lobster"', 'sans-serif'],
+      'rubik': ['"Rubik"','sans-serif']
     },
     extend: {},
   },

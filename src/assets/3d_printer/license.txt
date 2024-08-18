@@ -1,0 +1,11 @@
+Model Information:
+* title:	3D printer
+* source:	https://sketchfab.com/3d-models/3d-printer-da718613cdab4eee82fd41f3402cf688
+* author:	Petar_Trichkov (https://sketchfab.com/Petar_Trichkov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "3D printer" (https://sketchfab.com/3d-models/3d-printer-da718613cdab4eee82fd41f3402cf688) by Petar_Trichkov (https://sketchfab.com/Petar_Trichkov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

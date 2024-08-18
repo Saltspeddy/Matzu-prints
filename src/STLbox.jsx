@@ -145,11 +145,11 @@ export default function STLbox({ modelUrl }) {
     <div className="w-full h-[20rem] rounded-2xl flex">
       <div className="w-[30rem] h-[20rem]" ref={mountRef}></div>
       <div>
-        <h1>Volume:</h1>
+        <h1 className="text-xl font-semibold">Volume:</h1>
         <p>{totalVolume.toFixed(2)} cubic mm</p>
-        <h1>Filament weight:</h1>
+        <h1 className="text-xl font-semibold">Filament weight:</h1>
         <p>{weightInGrams.toFixed(2)} grams</p>
-        <h1>Filament length:</h1>
+        <h1 className="text-xl font-semibold">Filament length:</h1>
         <p>{filamentLength.toFixed(2)} mm</p>
       </div>
     </div>
