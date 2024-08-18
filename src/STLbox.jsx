@@ -1,10 +1,14 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { STLLoader } from "three-stdlib";
 
 export default function STLbox({ modelUrl }) {
   const mountRef = useRef(null);
+  const [totalVolume, setTotalVolume] = useState(0);
+  const [weightInGrams, setWeightInGrams] = useState(0);
+  const [filamentLength, setFilamentLength] = useState(0);
+
   useEffect(() => {
     if (!modelUrl) return; // Ensure there's a modelUrl before continuing
 
@@ -41,12 +45,14 @@ export default function STLbox({ modelUrl }) {
 
     // STLLoader
     const loader = new STLLoader();
+    let mesh;
     if (modelUrl instanceof ArrayBuffer) {
       // Using loader.parse when modelUrl is an ArrayBuffer (from uploaded file)
       const geometry = loader.parse(modelUrl);
       const material = new THREE.MeshNormalMaterial();
-      const mesh = new THREE.Mesh(geometry, material);
+      mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
+      calculateVolume(geometry); // Calculate volume after the geometry is loaded
     } else {
       console.error("Expected ArrayBuffer, but got:", typeof modelUrl);
     }
@@ -71,9 +77,9 @@ export default function STLbox({ modelUrl }) {
     };
     animate();
 
-    function calculateVolume() {
+    // Volume Calculation
+    function calculateVolume(geometry) {
       let totalVolume = 0;
-      const geometry = loader.parse(modelUrl);
       geometry.computeVertexNormals();
       const positions = geometry.attributes.position.array;
 
@@ -88,7 +94,6 @@ export default function STLbox({ modelUrl }) {
           positions[i + 4],
           positions[i + 5]
         );
-
         const v2 = new THREE.Vector3(
           positions[i + 6],
           positions[i + 7],
@@ -100,15 +105,16 @@ export default function STLbox({ modelUrl }) {
       }
       totalVolume = Math.round(Math.abs(totalVolume));
       console.log(totalVolume);
-      return totalVolume;
+      setTotalVolume(totalVolume);
+      estimateFilamentUsage(totalVolume);
     }
 
+    // Filament Estimation
     function estimateFilamentUsage(
       volumeInCubicMM,
       filamentDiameter = 1.75,
       filamentDensity = 1.25
     ) {
-      volumeInCubicMM = calculateVolume();
       // Volume of filament (cylinder) per millimeter
       const radius = filamentDiameter / 2;
       const crossSectionArea = Math.PI * Math.pow(radius, 2); // Area in square mm
@@ -116,17 +122,14 @@ export default function STLbox({ modelUrl }) {
       // Convert volume to grams using the density of the filament
       const volumeInCubicCM = volumeInCubicMM / 1000; // Convert cubic mm to cubic cm
       const weightInGrams = volumeInCubicCM * filamentDensity; // Weight in grams
-
+      setWeightInGrams(weightInGrams);
+      console.log(weightInGrams);
       // Calculate filament length in mm
       const filamentLength = volumeInCubicMM / crossSectionArea; // Length in mm
-      console.log(weightInGrams.toFixed(2));
-      console.log(filamentLength.toFixed(2));
-      return {
-        weightInGrams: weightInGrams.toFixed(2), // Filament weight in grams
-        lengthInMM: filamentLength.toFixed(2), // Filament length in millimeters
-      };
+      setFilamentLength(filamentLength);
+      console.log(filamentLength);
     }
-    estimateFilamentUsage();
+
     // Cleanup on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -138,5 +141,17 @@ export default function STLbox({ modelUrl }) {
     };
   }, [modelUrl]); // Effect runs whenever modelUrl changes
 
-  return <div className="w-full h-[20rem] rounded-2xl" ref={mountRef}></div>;
+  return (
+    <div className="w-full h-[20rem] rounded-2xl flex">
+      <div className="w-[30rem] h-[20rem]" ref={mountRef}></div>
+      <div>
+        <h1>Volume:</h1>
+        <p>{totalVolume.toFixed(2)} cubic mm</p>
+        <h1>Filament weight:</h1>
+        <p>{weightInGrams.toFixed(2)} grams</p>
+        <h1>Filament length:</h1>
+        <p>{filamentLength.toFixed(2)} mm</p>
+      </div>
+    </div>
+  );
 }
