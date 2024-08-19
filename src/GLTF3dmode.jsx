@@ -46,7 +46,7 @@ export default function GLTF3dmode() {
 
     // GLTFLoader
     const loader = new GLTFLoader();
-    loader.load("src/assets/3d_printer/scene.gltf", (gltf) => {
+    loader.load("/3d_printer/scene.gltf", (gltf) => {
       const model = gltf.scene;
       scene.add(model);
       modelRef.current = model;

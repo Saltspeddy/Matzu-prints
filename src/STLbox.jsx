@@ -122,6 +122,7 @@ export default function STLbox({ modelUrl }) {
       // Convert volume to grams using the density of the filament
       const volumeInCubicCM = volumeInCubicMM / 1000; // Convert cubic mm to cubic cm
       const weightInGrams = volumeInCubicCM * filamentDensity; // Weight in grams
+      const modelPrice = weightInGrams;
       setWeightInGrams(weightInGrams);
       console.log(weightInGrams);
       // Calculate filament length in mm
@@ -144,13 +145,19 @@ export default function STLbox({ modelUrl }) {
   return (
     <div className="w-full h-[20rem] rounded-2xl flex">
       <div className="w-[30rem] h-[20rem]" ref={mountRef}></div>
-      <div>
-        <h1 className="text-xl font-semibold">Volume:</h1>
-        <p>{totalVolume.toFixed(2)} cubic mm</p>
-        <h1 className="text-xl font-semibold">Filament weight:</h1>
-        <p>{weightInGrams.toFixed(2)} grams</p>
-        <h1 className="text-xl font-semibold">Filament length:</h1>
-        <p>{filamentLength.toFixed(2)} mm</p>
+      <div className="flex flex-col justify-between pb-8">
+        <div>
+          <h1 className="text-xl font-semibold">Volume:</h1>
+          <p>{totalVolume.toFixed(2)} cubic mm</p>
+          <h1 className="text-xl font-semibold">Filament weight:</h1>
+          <p>{weightInGrams.toFixed(2)} grams</p>
+          <h1 className="text-xl font-semibold">Filament length:</h1>
+          <p>{filamentLength.toFixed(2)} mm</p>
+        </div>
+        <div>
+          <h1 className="text-xl font-semibold">Price:</h1>
+          <p></p>
+        </div>
       </div>
     </div>
   );
