@@ -10,10 +10,14 @@ export default function About() {
             backgroundImage: "url(/dragos.png)",
           }}
         ></div>
-        <h1 className="text-3xl">Welcome, 3D Visionary!</h1>
+        <h1 className="text-3xl">Hello, 3D Visionary!</h1>
         <p className="text-lg">
-          At Matzu Printers, we're dedicated to turning your creative ideas into
-          reality, one print at a time.
+          Welcome to Matzu Prints, where innovation meets precision. We
+          specialize in creating high-quality, on-demand 3D-printed parts
+          tailored to your unique specifications. Whether you're an individual
+          maker, a professional engineer, or a business seeking custom
+          components, Matzu Prints is your trusted partner in bringing your
+          concepts to life.
         </p>
       </div>
       <div>

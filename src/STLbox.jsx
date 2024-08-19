@@ -8,6 +8,7 @@ export default function STLbox({ modelUrl }) {
   const [totalVolume, setTotalVolume] = useState(0);
   const [weightInGrams, setWeightInGrams] = useState(0);
   const [filamentLength, setFilamentLength] = useState(0);
+  const [modelPrice, setModelPrice] = useState(0);
 
   useEffect(() => {
     if (!modelUrl) return; // Ensure there's a modelUrl before continuing
@@ -122,7 +123,8 @@ export default function STLbox({ modelUrl }) {
       // Convert volume to grams using the density of the filament
       const volumeInCubicCM = volumeInCubicMM / 1000; // Convert cubic mm to cubic cm
       const weightInGrams = volumeInCubicCM * filamentDensity; // Weight in grams
-      const modelPrice = weightInGrams;
+      const modelPrice = (weightInGrams / 1000) * 20 + 2;
+      setModelPrice(modelPrice);
       setWeightInGrams(weightInGrams);
       console.log(weightInGrams);
       // Calculate filament length in mm
@@ -156,7 +158,7 @@ export default function STLbox({ modelUrl }) {
         </div>
         <div>
           <h1 className="text-xl font-semibold">Price:</h1>
-          <p></p>
+          <p>{modelPrice.toFixed(2)}</p>
         </div>
       </div>
     </div>
