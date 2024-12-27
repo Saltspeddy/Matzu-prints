@@ -2,7 +2,7 @@ import Home from "./Home";
 import Nav from "./Nav";
 import Prints from "./Prints";
 import About from "./About";
-import Shop from "./shop";
+import Shop from "./Shop";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
