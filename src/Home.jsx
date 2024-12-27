@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import STLbox from "./STLbox";
 import GLTF3dmode from "./GLTF3dmode";
+import Footer from "./Footer";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState(null);
@@ -64,6 +65,7 @@ export default function Home() {
           <STLbox modelUrl={inputValue}></STLbox>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

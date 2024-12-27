@@ -1,12 +1,24 @@
+import Footer from "./Footer";
+
 export default function Prints() {
   return (
     <div className="bg-[#011627] w-full mt-24 text-[#FDFFFC] flex flex-col justify-center items-center">
       {" "}
       <h1 className="text-6xl font-roboto">
-        Here you can see some awsome prints made here at Matzu!
+        Here you can see some awesome prints made here at Matzu!
       </h1>
-      <div className="w-screen p-10 grid grid-cols-4 gap-12 justify-center">
-        <div className="flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
+      <div className="w-screen p-10 flex flex-wrap gap-12 justify-center">
+        <div className="w-[300px] h-[400px] bg-black"></div>
+        <div className="w-[300px] h-[40em] bg-black"></div>
+        <div className="w-[300px] h-[30em] bg-black"></div>
+        <div className="w-[300px] h-[20em] bg-black"></div>
+        <div className="w-[300px] h-[400px] bg-black"></div>
+        <div className="w-[300px] h-[40em] bg-black"></div>
+        <div className="w-[300px] h-[30em] bg-black"></div>
+        <div className="w-[300px] h-[20em] bg-black"></div>
+        <div className="w-[300px] h-[30em] bg-black"></div>
+        <div className="w-[300px] h-[20em] bg-black"></div>
+        {/* <div className="flex flex-col gap-4 w-[25rem] border-[#FF7D00] rounded-2xl border-8 p-4">
           <h1 className="w-full border-b-2 border-[#FF7D00] font-lobster font-medium">
             @Username
           </h1>
@@ -70,8 +82,9 @@ export default function Prints() {
             }}
           ></div>
           <h2>3dprinted Yoda figurine</h2>
-        </div>
+        </div> */}
       </div>
+      <Footer></Footer>
     </div>
   );
 }
