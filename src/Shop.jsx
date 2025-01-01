@@ -4,7 +4,7 @@ import Itemcard from "./Itemcard";
 export default function Shop() {
   return (
     <div className="w-screen min-h-screen bg-[#011627]">
-      <div className="w-full min-h-screen grid grid-cols-5 mt-24 text-[#FDFFFC]">
+      <div className="w-full min-h-screen grid grid-cols-5 pt-24 text-[#FDFFFC]">
         <div className="flex flex-col items-center">
           <div className="fixed flex flex-col top-32 bg-[#022D50] p-4 rounded-2xl w-[15vw] h-[70vh] text-2xl font-roboto">
             <div>Categories:</div>
