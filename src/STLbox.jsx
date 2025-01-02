@@ -12,7 +12,10 @@ export default function STLbox({ modelUrl }) {
 
   useEffect(() => {
     if (!modelUrl) return; // Ensure there's a modelUrl before continuing
-
+    console.log(modelUrl);
+    // let substring = modelUrl.split("//");
+    // fileName = modelUrl.split(/(\\|\/)/g).pop();
+    // return modelUrl.split(".").pop();
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(

@@ -8,6 +8,12 @@ export default function Home() {
 
   const changeModelUrl = (event) => {
     const file = event.target.files[0];
+    let fileName = file.name;
+    let extension = fileName.split(".").pop();
+    if (extension != "stl" && extension != "3mf" && extension != "step") {
+      alert("The filetype is different from the one required");
+      return;
+    }
     if (file) {
       const reader = new FileReader();
 
@@ -52,17 +58,21 @@ export default function Home() {
       </div>
 
       <div className="w-full h-screen flex flex-col justify-center items-center bg-[#E5E5E5]">
+        <div className=""></div>
         <div className=" bg-[#011627] p-4 rounded-2xl text-white shadow-lg shadow-[#FF7D00]">
           <h1 className="text-xl font-semibold">
             Drop here your file and we will print them for you!
           </h1>
           <form method="post">
             <div>
-              <label htmlFor="file">Choose STL file to upload</label>
+              <label htmlFor="file">
+                Choose STL, 3MF or STEP file to upload
+              </label>
               <input type="file" name="file" onChange={changeModelUrl} />
             </div>
           </form>
-          <STLbox modelUrl={inputValue}></STLbox>
+          {/* <ThreeMFbox modelUrl={inputValue}></ThreeMFbox> */}
+          <STLbox className="hidden" modelUrl={inputValue}></STLbox>
         </div>
       </div>
       <Footer></Footer>
